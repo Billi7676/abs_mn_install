@@ -101,3 +101,16 @@ After your node is synced with the network, switch to you control wallet and sta
 Now you need to wait another 20 minutes and the status of your masternode should be Enabled.
 
 Congratulations, your Absolute MasterNode is running! 
+
+
+## Secure your vps
+
+You can use ufw firewall combined with fail2ban to secure your vps against attacks comming from internet.
+Open ssh and abs port in firewall and enable ufw with the next commands:
+
+	ufw allow 22/tcp
+	ufw allow 18888/tcp
+	ufw enable
+
+**Good luck!**
+*If you run into problems ask for help in ABS discord support chanel.*
