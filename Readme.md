@@ -9,7 +9,7 @@ https://github.com/absolute-community/absolute/wiki
 ## What you need
 
 To install the node you need the following:
-- a control wallet on your PC, MAC or Linux computer (v12.2.4)
+- a control wallet on your PC, MAC or Linux computer (v12.2.4 at the time of writing)
 - 2500 ABS coins that will be used as collateral
 - a vps server running Ubuntu Linux 16.04
 
