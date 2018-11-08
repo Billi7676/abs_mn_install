@@ -1,10 +1,10 @@
-###Absolute coin (ABS) masternode install script
+### Absolute coin (ABS) masternode install script
 
 This script is used to install a vps masternode of Absolute coin (ABS).
 The source of this script and documentation is ABS wiki on github.
 
 
-##What you need
+## What you need
 
 To install the node you need the following:
 - a control wallet on your PC, MAC or Linux computer (v12.2.4)
@@ -12,7 +12,7 @@ To install the node you need the following:
 - a vps server running Ubuntu Linux 16.04
 
 
-##How to do it
+## How to do it
 
 **1. On your local computer**
 
