@@ -100,6 +100,11 @@ After your node is synced with the network, switch to you control wallet and sta
 
 Now you need to wait another 20 minutes and the status of your masternode should be Enabled.
 
+To check if the masternode started succesfully type next command on your vps:
+
+	absolute-cli masternode status
+	
+
 Congratulations, your Absolute MasterNode is running! 
 
 
