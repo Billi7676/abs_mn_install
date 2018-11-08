@@ -74,7 +74,7 @@ Start the install script with the next command. You need to provide the masterno
 
 Make sure that the script run without errors!
 
-Some warnings may ocure, for example if you run the script twice for some reason.
+Some warnings may occure, for example if you run the script twice for some reason.
 
 When script finished you are presented with two lines that you need to add them to your crontab using the next command. You can select them with your mouse to be copied in clipboard.
 
