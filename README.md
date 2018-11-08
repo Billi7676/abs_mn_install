@@ -113,4 +113,5 @@ Open ssh and abs port in firewall and enable ufw with the next commands:
 	ufw enable
 
 **Good luck!**
+
 *If you run into problems ask for help in ABS discord support chanel.*
