@@ -1,7 +1,9 @@
 # Absolute coin (ABS) masternode install script
 
 This script is used to install a vps masternode of Absolute coin (ABS).
-The source of this script and documentation is ABS wiki on github.
+The source of this script and documentation is ABS wiki on github found here:
+
+https://github.com/absolute-community/absolute/wiki
 
 
 ## What you need
