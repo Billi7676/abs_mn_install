@@ -42,6 +42,7 @@ This private key is needed later when you run install script.
 
 Now open the masternode configuration file from the control wallet (Tools > Open masternode configuration file) and configure the masternode using the example present in the file.
 You need the following information to create the masternode line, separated by one space:
+- masternode alias
 - vps ip and port
 - masternode private key
 - transaction id
