@@ -28,7 +28,7 @@ Then you need to generate a new ABS address in your control wallet. Open Debug C
 
 MN1 is just an alias associated with the generated address.
 
-Send the collateral - 2500 ABS - to the address generated above. Make sure that you send exactly 2500 ABS to that address. Make sure that the <Substract fee from amount> option is not checked.
+Send the collateral - 2500 ABS - to the address generated above. Make sure that you send exactly 2500 ABS to that address. Make sure that the \<Substract fee from amount\> option is not checked.
 
 You need to wait for 15 confirmations before you can obtain transaction id and index with the next command run in debug console:
 
