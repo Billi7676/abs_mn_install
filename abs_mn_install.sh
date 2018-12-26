@@ -97,12 +97,14 @@ printf "\nWe are now in $(pwd) directory\n"
 {
 	echo
 	echo "*** Installing sentinel ***"
-	if [ ! -d /root/.absolutecore/sentinel ]; then
-		cd /root/.absolutecore/
-		git clone https://github.com/absolute-community/sentinel.git --q 
-	else
+	cd /root/.absolutecore/
+	if [ -d /root/.absolutecore/sentinel ]; then
 		printf "\33[0;33mSentinel already installed! \033[0m\n"
+		echo "Remove old sentinel directory..."
+		rm -r /root/.absolutecore/sentinel
+		printf "\33[0;32m...done! \033[0m\n"	
 	fi
+	git clone https://github.com/absolute-community/sentinel.git --q 
 	cd /root/.absolutecore/sentinel &&
 	virtualenv ./venv &&
 	./venv/bin/pip install -r requirements.txt
@@ -115,12 +117,33 @@ printf "\nWe are now in $(pwd) directory\n"
 	if grep -q -x 'absolute_conf=/root/.absolutecore/absolute.conf' /root/.absolutecore/sentinel/sentinel.conf ; then
 		printf "\33[0;33mabsolute.conf path already set in sentinel.conf! \033[0m\n"
 	else
-		printf "absolute_conf=/root/.absolutecore/absolute.conf" >> /root/.absolutecore/sentinel/sentinel.conf
+		printf "absolute_conf=/root/.absolutecore/absolute.conf\n" >> /root/.absolutecore/sentinel/sentinel.conf
 		printf "\33[0;32m...done! \033[0m\n"
 	fi
 }
 
-printf "\nPlease add next two commands in your crontab:"
-printf "\n@reboot cd /root/Absolute && /root/Absolute/absoluted -daemon"
-printf "\n* * * * * cd /root/.absolutecore/sentinel && ./venv/bin/python bin/sentinel.py >/dev/null 2>&1\n"
+{
+        echo
+        echo "*** Configuring crontab ***"
+        update-alternatives --set editor /bin/nano
+
+        echo  "Set ABS daemon to run at vps reboot..."
+        if crontab -l 2>/dev/null | grep -q -x "@reboot cd /root/Absolute && /root/Absolute/absoluted -daemon" >/dev/null ; then
+                printf "\33[0;33mABS daemon already set to run at vps reboot! \033[0m\n"
+        else
+                (crontab -l 2>/dev/null; echo "@reboot cd /root/Absolute && /root/Absolute/absoluted -daemon") | crontab -
+                printf "\33[0;32m...done! \033[0m\n"
+
+        fi
+        echo ""
+        echo  "Set sentinel to run at every minute..."
+        if crontab -l 2>/dev/null | grep -q -x "\* \* \* \* \* cd /root/.absolutecore/sentinel && ./venv/bin/python bin/sentinel.py >/dev/null 2>&1" >/dev/null ; then
+                printf "\33[0;33msentinel already set! \033[0m\n"
+        else
+                (crontab -l 2>/dev/null; echo "* * * * * cd /root/.absolutecore/sentinel && ./venv/bin/python bin/sentinel.py >/dev/null 2>&1") | crontab -
+                printf "\33[0;32m...done! \033[0m\n"
+        fi
+
+}
+
 printf "\nNow you can start the abs daemon with this command:\nabsoluted -daemon\n\n"
