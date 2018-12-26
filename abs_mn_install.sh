@@ -138,7 +138,7 @@ printf "\nWe are now in $(pwd) directory\n"
         echo ""
         echo  "Set sentinel to run at every minute..."
         if crontab -l 2>/dev/null | grep -q -x "\* \* \* \* \* cd /root/.absolutecore/sentinel && ./venv/bin/python bin/sentinel.py >/dev/null 2>&1" >/dev/null ; then
-                printf "\33[0;33msentinel already set! \033[0m\n"
+                printf "\33[0;33msentinel run already set! \033[0m\n"
         else
                 (crontab -l 2>/dev/null; echo "* * * * * cd /root/.absolutecore/sentinel && ./venv/bin/python bin/sentinel.py >/dev/null 2>&1") | crontab -
                 printf "\33[0;32m...done! \033[0m\n"
