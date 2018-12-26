@@ -77,12 +77,6 @@ Make sure that the script run without errors!
 
 Some warnings may occure, for example if you run the script twice for some reason.
 
-When script finished you are presented with two lines that you need to add them to your crontab using the next command. You can select them with your mouse to be copied in clipboard.
-
-	crontab -e
-	
-Paste the two lines at the end of the crontab file, save and close it.
-
 You can now start the ABS daemon with this command:
 
 	absoluted -daemon
