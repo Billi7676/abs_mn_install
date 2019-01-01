@@ -88,6 +88,7 @@ printf "\nWe are now in $(pwd) directory\n"
 		printf "\n#--- basic configuration --- \nrpcuser=abs_mn_user\nrpcpassword=$rpc_pass\nrpcport=18889\ndaemon=1\nlisten=1\nserver=1\nmaxconnections=256\nrpcallowip=127.0.0.1\nexternalip=$ext_ip:18888\n" > /root/.absolutecore/absolute.conf
 		printf "\n#--- masternode ---\nmasternode=1\nmasternodeprivkey=$mn_key\n" >> /root/.absolutecore/absolute.conf
 		printf "\n#--- new nodes ---\naddnode=139.99.41.241:18888\naddnode=139.99.41.242:18888\naddnode=139.99.202.1:18888\naddnode=139.99.96.203:18888\naddnode=139.99.40.157:18888\naddnode=139.99.41.35:18888\naddnode=139.99.41.198:18888\naddnode=139.99.44.0:18888\n" >> /root/.absolutecore/absolute.conf
+		printf "\naddnode=45.77.138.219:18888\naddnode=192.3.134.140:18888\naddnode=107.174.102.130:18888\naddnode=107.173.70.103:18888\naddnode=107.173.70.105:18888\naddnode=107.174.142.252:18888\naddnode=54.93.66.231:18888\naddnode=66.23.197.121:18888\n" >> /root/.absolutecore/absolute.conf
 		printf "\33[0;32m...done! \033[0m\n"
 	else
 		printf "\33[0;31mConfiguration directory found! Remove .absolutecore directory or configure daemon manually! \033[0m\n"
