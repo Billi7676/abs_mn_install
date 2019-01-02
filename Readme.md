@@ -67,7 +67,7 @@ You need to be root, so, if you use a different user to login to your vps then s
 
 Download the install script with this command:
 
-	wget https://bit.ly/abs_mn_install -O abs_vps_install.sh && chmod +x abs_vps_install.sh
+	wget https://bit.ly/abs_vps_install -O abs_vps_install.sh && chmod +x abs_vps_install.sh
 
 Start the install script with the next command. You need to provide the masternode private key generated earlier.
 
