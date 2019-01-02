@@ -188,4 +188,4 @@ wallet_file="absolute_12.2.4_linux.tar.gz"
 }
 
 printf "\n%s\n" "Now you can start the abs daemon with this command:"
-printf "%s\n\n" "absoluted -daemon"
+printf "absoluted -daemon -datadir=%s\n\n" "$abs_path"
