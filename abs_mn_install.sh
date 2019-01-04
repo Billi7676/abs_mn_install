@@ -19,8 +19,12 @@ function extractDaemon
 {
 	echo "Extracting..."
 	tar -zxvf "$wallet_file" && mv "$wallet_dir_name" "$wallet_path"
-	rm /usr/local/bin/absolute-cli
-	rm /usr/local/bin/absoluted
+	if [ -f "/usr/local/bin/absolute-cli" ]; then
+		rm /usr/local/bin/absolute-cli
+	fi
+	if [ -f "/usr/local/bin/absoluted" ]; then
+		rm /usr/local/bin/absoluted
+	fi
 	ln -s "$wallet_path"/absolute-cli /usr/local/bin/absolute-cli
 	ln -s "$wallet_path"/absoluted /usr/local/bin/absoluted
 	rm "$wallet_file"
@@ -125,7 +129,7 @@ wallet_file="absolute_12.2.4_linux.tar.gz"
 		{
 		printf "\n#--- basic configuration --- \nrpcuser=abs_mn_user\nrpcpassword=$rpc_pass\nrpcport=18889\ndaemon=1\nlisten=1\nserver=1\nmaxconnections=256\nrpcallowip=127.0.0.1\nexternalip=%s:18888\n" "$ext_ip"
 		printf "\n#--- masternode ---\nmasternode=1\nmasternodeprivkey=%s\n" "$mn_key"
-		printf "\n#--- new nodes ---\naddnode=139.99.41.241:18888\naddnode=139.99.41.242:18888\naddnode=139.99.202.1:18888\naddnode=139.99.96.203:18888\naddnode=139.99.40.157:18888\naddnode=139.99.41.35:18888\naddnode=139.99.41.198:18888\naddnode=139.99.44.0:18888\n"
+		printf "\n#--- new nodes ---\naddnode=45.63.99.215:18888\naddnode=45.77.134.248:18888\naddnode=140.82.46.194:18888\naddnode=139.99.96.203:18888\naddnode=139.99.40.157:18888\naddnode=139.99.41.35:18888\naddnode=139.99.41.198:18888\naddnode=139.99.44.0:18888\n"
 		printf "addnode=45.77.138.219:18888\naddnode=192.3.134.140:18888\naddnode=107.174.102.130:18888\naddnode=107.173.70.103:18888\naddnode=107.173.70.105:18888\naddnode=107.174.142.252:18888\naddnode=54.93.66.231:18888\naddnode=66.23.197.121:18888\n"
 		} > "$abs_conf_file"
 
@@ -179,10 +183,10 @@ wallet_file="absolute_12.2.4_linux.tar.gz"
 	echo ""
 	echo  "Set sentinel to run at every minute..."
 	if crontab -l 2>/dev/null | grep -q -x "\* \* \* \* \* cd $sentinel_path && ./venv/bin/python bin/sentinel.py >/dev/null 2>&1" >/dev/null ; then
-			printf "\33[0;33msentinel run already set! \033[0m\n"
+		printf "\33[0;33msentinel run already set! \033[0m\n"
 	else
-			(crontab -l 2>/dev/null; echo "* * * * * cd $sentinel_path && ./venv/bin/python bin/sentinel.py >/dev/null 2>&1") | crontab -
-			printSuccess "...done!"
+		(crontab -l 2>/dev/null; echo "* * * * * cd $sentinel_path && ./venv/bin/python bin/sentinel.py >/dev/null 2>&1") | crontab -
+		printSuccess "...done!"
 	fi
 
 }
