@@ -50,7 +50,7 @@ sentinel_conf_file="$sentinel_path/sentinel.conf"
 wallet_path="$root_path/Absolute"
 
 # when new wallet release is published the next two lines needs to be updated
-wallet_url="https://github.com/absolute-community/absolute/releases/download/12.2.4"
+wallet_url="https://github.com/absolute-community/absolute/releases/download/v12.2.4"
 wallet_file="absolute_12.2.4_linux.tar.gz"
 
 {
