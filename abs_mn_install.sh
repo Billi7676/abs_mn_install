@@ -37,7 +37,7 @@ clear
 mn_key=$1
 if [ -z "$mn_key" ]; then
 	printError "MN key is missing!!!"
-	printError "Usage $0 <mn_key>"
+	printError "Usage $0 mn_key"
 	exit 0
 fi
 
