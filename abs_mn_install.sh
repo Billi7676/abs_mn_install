@@ -31,19 +31,15 @@ function extractDaemon
 	printSuccess "...done!"
 }
 
-mn_key=$1
+# entry point
+clear
 
+mn_key=$1
 if [ -z "$mn_key" ]; then
 	printError "MN key is missing!!!"
 	printError "Usage $0 <mn_key>"
 	exit 0
 fi
-
-# entry point
-clear
-printf "\n===== ABS v12.2.4. masternode vps install =====\n"
-printf "\n%s\n" "Installed OS: $(cut -d':' -f2 <<< "$(lsb_release -d)")"
-printf "\n%s\n" "We are now in $(pwd) directory"
 
 # set vars used by the script
 root_path="$(pwd)"
@@ -54,8 +50,14 @@ sentinel_conf_file="$sentinel_path/sentinel.conf"
 wallet_path="$root_path/Absolute"
 
 # when new wallet release is published the next two lines needs to be updated
-wallet_url="https://github.com/absolute-community/absolute/releases/download/v12.2.4"
+wallet_ver="v12.2.4"
 wallet_file="absolute_12.2.4_linux.tar.gz"
+
+wallet_url="https://github.com/absolute-community/absolute/releases/download/$wallet_ver"
+
+printf "\n===== ABS %s masternode vps install =====\n" $wallet_ver
+printf "\n%s\n" "Installed OS: $(cut -d':' -f2 <<< "$(lsb_release -d)")"
+printf "\n%s\n" "We are now in $(pwd) directory"
 
 {
 	echo "*** Updating system ***"
@@ -108,7 +110,7 @@ wallet_file="absolute_12.2.4_linux.tar.gz"
 			kill -9 "$(pgrep "absoluted")"
 			sleep 10
 			printSuccess "...done!"
-			fi
+		fi
 		printWarning "Remove old daemon directory..."
 		rm -r "$wallet_path"
 		printSuccess "...done!"
@@ -183,7 +185,7 @@ wallet_file="absolute_12.2.4_linux.tar.gz"
 	echo ""
 	echo  "Set sentinel to run at every minute..."
 	if crontab -l 2>/dev/null | grep -q -x "\* \* \* \* \* cd $sentinel_path && ./venv/bin/python bin/sentinel.py >/dev/null 2>&1" >/dev/null ; then
-		printf "\33[0;33msentinel run already set! \033[0m\n"
+		printWarning "Sentinel run at every minute already set!"
 	else
 		(crontab -l 2>/dev/null; echo "* * * * * cd $sentinel_path && ./venv/bin/python bin/sentinel.py >/dev/null 2>&1") | crontab -
 		printSuccess "...done!"
