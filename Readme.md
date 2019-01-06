@@ -71,7 +71,7 @@ Download the install script with this command:
 
 Start the install script with the next command. You need to provide the masternode private key generated earlier.
 
-	./abs_vps_install.sh <mn_private_key>
+	./abs_vps_install.sh mn_private_key
 
 Make sure that the script run without errors!
 
