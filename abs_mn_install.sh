@@ -179,7 +179,7 @@ else
 	printSuccess "...done!"
 fi
 
-echo ""
+echo
 echo "Setup absd.service"
 absd="$systemd_unit_path/$abs_unit_file"
 touch "$absd"
