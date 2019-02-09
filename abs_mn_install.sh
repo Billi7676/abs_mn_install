@@ -180,7 +180,7 @@ else
 fi
 
 echo
-echo "Setup absd.service"
+echo "*** Setup ABS systemd unit ***"
 absd="$systemd_unit_path/$abs_unit_file"
 touch "$absd"
 {
@@ -192,6 +192,7 @@ touch "$absd"
 	printf "\n[Install]\nWantedBy=multi-user.target\n"
 } > "$absd"
 systemctl enable "$abs_unit_file"
+printSuccess "...done!"
 
 printf "\n%s\n" "Now you can start the abs daemon with this command:"
 printf "systemctl start $abs_unit_file\n\n"
