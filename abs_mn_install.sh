@@ -34,7 +34,7 @@ function printWarning
 function extractDaemon
 {
 	echo "Extracting..."
-	tar -zxvf "$wallet_file" && mv "$wallet_dir_name" "$wallet_path"
+	tar -zxvf "$wallet_file" && mv "$wallet_dir_name/bin" "$wallet_path"
 	if [ -f "/usr/local/bin/absolute-cli" ]; then
 		rm /usr/local/bin/absolute-cli
 	fi
