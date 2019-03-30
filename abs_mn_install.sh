@@ -35,6 +35,7 @@ function extractDaemon
 {
 	echo "Extracting..."
 	tar -zxvf "$wallet_file" && mv "$wallet_dir_name/bin" "$wallet_path"
+  rm -r "$wallet_dir_name"
 	if [ -f "/usr/local/bin/absolute-cli" ]; then
 		rm /usr/local/bin/absolute-cli
 	fi
@@ -64,13 +65,13 @@ printf "\n%s\n" "We are now in $(pwd) directory"
 # check ubuntu version - we need 16.04
 if [ -r /etc/os-release ]; then
 	. /etc/os-release
-	if [ "${VERSION_ID}" != "16.04" ] ; then
-		echo "Script needs Ubuntu 16.04, exiting!"
+	if [ "${ID}" != "ubuntu" ] ; then
+		echo "Script needs Ubuntu, exiting!"
 		echo
 		exit 1
 	fi
 else
-	echo "Operating system is not Ubuntu 16.04, exiting!"
+	echo "Operating system is not Ubuntu, exiting!"
 	echo
 	exit 1
 fi
@@ -82,7 +83,7 @@ printSuccess "...done!"
 
 echo
 echo "*** Install ABS daemon dependencies ***"
-apt-get install nano mc dbus ufw fail2ban htop git pwgen python virtualenv python-virtualenv software-properties-common libzmq5 libboost-system1.58.0 libboost-filesystem1.58.0 libboost-program-options1.58.0 libboost-thread1.58.0 libboost-chrono1.58.0 libevent-pthreads-2.0-5 libminiupnpc10 libevent-2.0-5 -y -qq
+apt-get install nano mc dbus ufw fail2ban htop git pwgen python virtualenv python-virtualenv software-properties-common -y -qq
 add-apt-repository ppa:bitcoin/bitcoin -y
 apt-get update -y -qq
 apt-get upgrade -y -qq
@@ -113,9 +114,9 @@ if [ -d "$wallet_path" ]; then
 	if [ -z "$(pgrep "absoluted")" ]; then
 		printWarning "Running daemon not found!"
 	else
-		printError "Running daemon found! Killing it..."
+		printError "Running daemon found! Kill it, then wait 30s..."
 		kill -9 "$(pgrep "absoluted")"
-		sleep 10
+		sleep 30
 		printSuccess "...done!"
 	fi
 	printWarning "Remove old daemon directory..."
