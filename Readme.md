@@ -9,9 +9,9 @@ https://github.com/absolute-community/absolute/wiki
 ## What you need
 
 To install the node you need the following:
-- a control wallet on your PC, MAC or Linux computer (v12.2.4 at the time of writing)
+- a control wallet on your PC, MAC or Linux computer
 - 2500 ABS coins that will be used as collateral
-- a vps server running Ubuntu Linux 16.04
+- a vps server running Ubuntu Linux
 
 
 ## How to do it
@@ -79,7 +79,7 @@ Some warnings may occure, for example if you run the script twice for some reaso
 
 You can now start the ABS daemon with this command:
 
-	absoluted -daemon
+	systemctl start absd
 
 At this point, the daemon start to download the ABS blockchain and sync with the network. This process takes about 15-20 minutes, depending on your vps internet connection.
 
