@@ -22,7 +22,10 @@ Download the last version of ABS wallet from the github repository found here:
 
 https://github.com/absolute-community/absolute/releases
 
-Then you need to generate a new ABS address in your control wallet. Open Debug Console from Tools menu of your control wallet and paste the next command:
+Then you need to generate a few new ABS address in your control wallet. 
+
+First one is the masternode collateral address.
+Open Debug Console from Tools menu of your control wallet and paste the next command:
 
 	getaccountaddress MN1
 
@@ -30,7 +33,7 @@ MN1 is just an alias associated with the generated address.
 
 Send the collateral - 2500 ABS - to the address generated above. Make sure that you send exactly 2500 ABS to that address. Make sure that the \<Substract fee from amount\> option is not checked.
 
-You need to wait for 15 confirmations before you can obtain transaction id and index with the next command run in debug console:
+You need to wait for 15 confirmations (to be safe) before you can obtain transaction id and index with the next command run in debug console:
 
 	masternode outputs
 
@@ -38,23 +41,38 @@ To connect your vps with the cold wallet you need a masternode private key which
 
 	masternode genkey
 
-This private key is needed later when you run install script.
+This key is needed for a while until the network is upgraded. In the future there will be another mechanism (bls private and public keys pair) to link masternode vps with the control wallet.
 
-Now open the masternode configuration file from the control wallet (Tools > Open masternode configuration file) and configure the masternode using the example present in the file.
-You need the following information to create the masternode line, separated by one space:
-- masternode alias
-- vps ip and port
-- masternode private key
-- transaction id
-- output index
+To get the bls private key pair run this command in debug console:
 
-Example line:
+	bls generate
 
-	MN1 207.246.76.60:18888 93HaYBVUCYjEMeeH1Y4sBGLALQZE1Yc1K64xiqgX37tGBDQL8Xg 2bcd3c84c84f87eaa86e4e56834c92927a07f9e18718810b92e0d0324456a67c 0
+You need to store these keys as they will be used later on the install script (masternode genkey and bls private key) and on protx cmd (bls public key).
 
-Save this file and enable masternode tab in your ABS control wallet (Setting > Options > Wallet > Show mastenodes tab)
+Now we will need at least 2 new addresses - owner address (must be new and unused) and voting address - run these 2 cmds in debug console: 
 
-Restart your Absolute wallet.
+	getaccountaddress MN1-OWN
+	getaccountaddress MN1-VOT
+
+NOTE: Voting rights can be transferred to another address or owner... in this case later cmd will not be necessary.
+
+Optional, to keep track of your masternode payments you can generate another new address like this:
+
+	getaccountaddress MN1-PAYMENTS
+
+If this is not a priority you can use your wallet address.
+
+Optional, another address can be generated and used to cover fees for your masternodes transactions. You need to fund this address and use it on your protx command.
+
+	getaccountaddress MN-FEES
+
+
+I won't use it with this script, fees will be covered from the wallet address.
+
+
+
+
+
 
 
 **2. On your vps server**
