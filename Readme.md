@@ -16,6 +16,8 @@ To install the node you need the following:
 
 ## How to do it
 
+<br />
+
 **1. On your local computer**
 
 Download the last version of ABS wallet from the github repository found here:
@@ -69,6 +71,8 @@ Optional, another address can be generated and used to cover fees for your maste
 
 I won't use it with this script, fees will be covered from the main wallet address.
 
+<br />
+
 **2. On your vps server**
 
 Use Putty to connect to your vps via ssh. Make sure you have at least Ubuntu Linux v18.04 installed.
@@ -109,29 +113,48 @@ To check if the masternode started succesfully type next command on your vps:
 
 	absolute-cli masternode status
 
+
+Note: you need to have vps cold node synced before you continue with the part 3!
+
+<br />
+
 **3. On your control wallet**
 
 On your control wallet you need to run few commands to prepare, sign and sumbit a special protx transaction that will activate your masternode.
 
-First we need to prepare a unsigned special transaction using <protx register_prepare> command with this synthax:
+
+1. We need to prepare a unsigned special transaction using [protx register_prepare] command.
+
+Synthax:
 
 	protx register_prepare collateralTx collateralTxIndex ip:port ownerAddr operatorBlsPubKey votingAddr operatorReward payoutAddr (feeSourceAddr)
 
 You can use a text editor to prepare this command. Replace each command argument as follows:
 
-collateralTx: transaction id of the 2500ABS collateral
-collateralTxIndex: transaction index of the 2500ABS collateral
-ip:port: masternode ip and port
-ownerAddr: new ABS address generated above
-operatorBlsPubKey: BLS public key generated above
-votingAddr: new ABS address generated above or the address used to delegate proposal voting
-operatorReward: percentage of the block reward allocated to the operator as payment (use 0 here to simplify the process)
-payoutAddr: new or main wallet address to receive rewards
-feeSourceAddr: (optional) an address used to fund ProTx fee, if missing, payoutAddr will be used
+	- collateralTx: transaction id of the 2500ABS collateral
+
+	- collateralTxIndex: transaction index of the 2500ABS collateral
+
+	- ip:port: masternode ip and port
+
+	- ownerAddr: new ABS address generated above
+
+	- operatorBlsPubKey: BLS public key generated above
+
+	- votingAddr: new ABS address generated above or the address used to delegate proposal voting
+
+	- operatorReward: percentage of the block reward allocated to the operator as payment (use 0 here)
+
+	- payoutAddr: new or main wallet address to receive rewards
+
+	- feeSourceAddr: (optional) an address used to fund ProTx fee, if missing, payoutAddr will be used
+
 
 Note: if you use a non-zero operatorReward, you need to use a separate update_service transaction to specify the reward address (not covered by this how-to).
 
+
 Example command:
+
 	protx register_prepare 
 	75babcc7660dbce0d8f8c6ac541eabc0e7844e74e03b4ec4f85df902a1264099 
 	0 
@@ -144,25 +167,35 @@ Example command:
 
 
 Result:
+
 	{
   	"tx": "030001000180b191aa19030230c250064c9217f327fafd70b222fa7d6a3a50e8e774fc1a300000000000feffffff0121dff505000000001976a914e888e2ac0f029208e2ac59572740dcc66b3c4c4888ac00000000d1010000000000994026a102f95df8c44e3be0744e84e7c0ab1e54acc6f8d8e0bc0d66c7bcba750000000000000000000000000000ffff4115903c4571fd9dd95354f9c9e0c2ff15c503f2fb4c2effb4fe15d473ecc5b48f0f19c18a5bc78ae19dc722ccf22570f98ffc5945cdf4eda9539c421418e2cfb5e41fe0b6cb4d73d1f1c2407d14cacc4c275e35918102216c973ad1561b00001976a914e888e2ac0f029208e2ac59572740dcc66b3c4c4888ac216cf434d24a2547c9f0763a16a9bf2a695cac3d2c54dd9208bd631446f433d900",
   	"collateralAddress": "yXUmTnwkZrmXeSy1FwUr9pBcZPPtWjcT6M",
   	"signMessage": "yhWybg5sRZHopwwDHU7CRPkYiXUk9TgTV1|0|yjSSuGj2Num4cJmswrEyks1yUqSZ6PT9T2|ye2ZCAVkUEfvVyTLYDqmMG7aEZKtDeeEpn|5ccbe02fb852dcb5b11358de2d5cc9bd17db70d0b271ceb381328404830f34d2"
 	}
 
+Note: protx command should be one line with only one space between arguments.
 
-Sign the message:
+2. We need to sign the message resulted on previous command with the collateral address resulted above
+
+Synthax:
+
 	signmessage yXUmTnwkZrmXeSy1FwUr9pBcZPPtWjcT6M yhWybg5sRZHopwwDHU7CRPkYiXUk9TgTV1|0|yjSSuGj2Num4cJmswrEyks1yUqSZ6PT9T2|ye2ZCAVkUEfvVyTLYDqmMG7aEZKtDeeEpn|5ccbe02fb852dcb5b11358de2d5cc9bd17db70d0b271ceb381328404830f34d2
 
 
 Result:
+
 	H2rV31nqSkcWNqBhCYhCYYmKVTlQkzVjfzCvuqIjocknTPtzC3BgRgJR/uoPbNH8YHpETTYuhp+6Ms22gzeHsqg=
 
 
-Submit transaction:
+3. Submit transaction and signature obtained above
+
+Synthax:
+
 	protx register_submit 030001000180b191aa19030230c250064c9217f327fafd70b222fa7d6a3a50e8e774fc1a300000000000feffffff0121dff505000000001976a914e888e2ac0f029208e2ac59572740dcc66b3c4c4888ac00000000d1010000000000994026a102f95df8c44e3be0744e84e7c0ab1e54acc6f8d8e0bc0d66c7bcba750000000000000000000000000000ffff4115903c4571fd9dd95354f9c9e0c2ff15c503f2fb4c2effb4fe15d473ecc5b48f0f19c18a5bc78ae19dc722ccf22570f98ffc5945cdf4eda9539c421418e2cfb5e41fe0b6cb4d73d1f1c2407d14cacc4c275e35918102216c973ad1561b00001976a914e888e2ac0f029208e2ac59572740dcc66b3c4c4888ac216cf434d24a2547c9f0763a16a9bf2a695cac3d2c54dd9208bd631446f433d900 H2rV31nqSkcWNqBhCYhCYYmKVTlQkzVjfzCvuqIjocknTPtzC3BgRgJR/uoPbNH8YHpETTYuhp+6Ms22gzeHsqg=
 
 Result:
+
 	a12cbb3e286b53822e3c150ff1c8de2b6712e9dcbc29e9f54457440c245b7df5
 
 
