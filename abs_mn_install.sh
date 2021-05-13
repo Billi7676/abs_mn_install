@@ -11,8 +11,8 @@ systemd_unit_path="/etc/systemd/system"
 abs_unit_file="absd.service"
 
 # when new wallet release is published the next two lines needs to be updated
-wallet_ver="v12.2.5"
-wallet_file="absolutecore-0.12.2.5-x86_64-linux-gnu.tar.gz"
+wallet_ver="v0.13.0.1"
+wallet_file="absolutecore-0.13.0-x86_64-linux-gnu.tar.gz"
 
 wallet_url="https://github.com/absolute-community/absolute/releases/download/$wallet_ver"
 
