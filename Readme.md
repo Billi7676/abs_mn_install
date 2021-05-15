@@ -11,7 +11,7 @@ https://github.com/absolute-community/absolute/wiki
 To install the node you need the following:
 - a control wallet on your PC, MAC or Linux computer
 - 2500 ABS coins that will be used as collateral
-- a vps server running Ubuntu Linux
+- a vps server running Ubuntu Linux 18.04 or 20.04
 
 
 ## How to do it
@@ -62,7 +62,7 @@ Optional, to keep track of your masternode payments you can generate another new
 
 	getaccountaddress MN1-PAYMENTS
 
-If this is not a priority you can use your main wallet address. Note that you need to have some ABS here to cover few transactions fees (1 ABS will do).
+If this is not a priority you can use your main wallet address. Note that you need to have some ABS here to cover few transactions fees (1 ABS will do - must be confirmed - atleast 6 blocsk old).
 
 Optional, another address can be generated and used to cover fees for your masternodes transactions. You need to fund this address and use it on your protx command.
 
@@ -114,7 +114,7 @@ To check if the masternode started succesfully type next command on your vps:
 	absolute-cli masternode status
 
 
-Note: you need to have vps cold node synced before you continue with the part 3!
+Note: you need to have vps cold node synced (at least block 952208) before you continue with the part 3!
 
 <br />
 
@@ -123,7 +123,7 @@ Note: you need to have vps cold node synced before you continue with the part 3!
 On your control wallet you need to run few commands to prepare, sign and sumbit a special protx transaction that will activate your masternode.
 
 
-1. We need to prepare a unsigned special transaction using [protx register_prepare] command.
+<strong>Step 1. Prepare a unsigned special transaction.</strong>
 
 Synthax:
 
@@ -132,21 +132,13 @@ Synthax:
 You can use a text editor to prepare this command. Replace each command argument as follows:
 
 	- collateralTx: transaction id of the 2500ABS collateral
-
 	- collateralTxIndex: transaction index of the 2500ABS collateral
-
 	- ip:port: masternode ip and port
-
 	- ownerAddr: new ABS address generated above
-
 	- operatorBlsPubKey: BLS public key generated above
-
 	- votingAddr: new ABS address generated above or the address used to delegate proposal voting
-
 	- operatorReward: percentage of the block reward allocated to the operator as payment (use 0 here)
-
 	- payoutAddr: new or main wallet address to receive rewards
-
 	- feeSourceAddr: (optional) an address used to fund ProTx fee, if missing, payoutAddr will be used
 
 
@@ -176,7 +168,7 @@ Result:
 
 Note: protx command should be one line with only one space between arguments.
 
-2. We need to sign the message resulted on previous command with the collateral address resulted above
+<strong>Step 2. Sign the message resulted on previous command with the collateral address resulted above.</strong>
 
 Synthax:
 
@@ -188,7 +180,7 @@ Result:
 	H2rV31nqSkcWNqBhCYhCYYmKVTlQkzVjfzCvuqIjocknTPtzC3BgRgJR/uoPbNH8YHpETTYuhp+6Ms22gzeHsqg=
 
 
-3. Submit transaction and signature obtained above
+<strong>Step 3. Submit transaction and signature resulted above.</strong>
 
 Synthax:
 
@@ -201,10 +193,9 @@ Result:
 
 	
 
-
-
 Congratulations, your Absolute MasterNode is running! 
 
+<br />
 
 ## Secure your vps
 
