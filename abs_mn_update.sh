@@ -58,7 +58,7 @@ printf "\n%s\n" "We are now in $(pwd) directory"
 
 echo
 echo "*** Check for daemon unit $abs_unit_file ***"
-if [ ! -f "$systemd_unit_path/$abs_unit_file" ]; then
+if [ -f "$systemd_unit_path/$abs_unit_file" ]; then
         printWarning "Atempt to shutdown the daemon!"
         systemctl stop "$abs_unit_file"
         sleep 30
