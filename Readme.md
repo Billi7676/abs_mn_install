@@ -1,6 +1,7 @@
 # Absolute coin (ABS) masternode install script
 
-This script is used to install (or update) a vps masternode of Absolute coin (ABS).
+This script is used to install a vps masternode of Absolute coin (ABS) with ipv4 only.
+If you have a vps that has both, ipv4 and ipv6 enabled then look for multi node vps install script.
 
 The source of this script and documentation is ABS wiki on github found here:
 https://github.com/absolute-community/absolute/wiki
