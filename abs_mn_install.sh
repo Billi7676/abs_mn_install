@@ -11,8 +11,8 @@ systemd_unit_path="/etc/systemd/system"
 abs_unit_file="absd.service"
 
 # when new wallet release is published the next two lines needs to be updated
-wallet_ver="v0.13.0.1"
-wallet_file="absolutecore-0.13.0-x86_64-linux-gnu.tar.gz"
+wallet_ver="v0.14.0.1"
+wallet_file="absolutecore-0.14.0-x86_64-linux-gnu.tar.gz"
 
 wallet_url="https://github.com/absolute-community/absolute/releases/download/$wallet_ver"
 
@@ -71,7 +71,6 @@ fi
 
 echo
 echo "*** Provide necessary private keys ***"
-read -p 'Enter masternode private key: ' mn_key
 read -p 'Enter masternode BLS private key: ' mn_bls_key
 
 echo
@@ -82,7 +81,7 @@ printSuccess "...done!"
 
 echo
 echo "*** Install ABS daemon dependencies ***"
-apt-get install nano mc dbus ufw fail2ban htop git pwgen python virtualenv software-properties-common -y -qq
+apt-get install nano dbus ufw fail2ban git pwgen python virtualenv software-properties-common -y -qq
 printSuccess "...done!"
 
 echo
@@ -131,7 +130,7 @@ if [ ! -d "$abs_path" ]; then
 
 	{
 	printf "\n#--- basic configuration --- \nrpcuser=abs_mn_user\nrpcpassword=$rpc_pass\nrpcport=18889\ndaemon=1\nlisten=1\nserver=1\nmaxconnections=256\nrpcallowip=127.0.0.1\nexternalip=%s:18888\n" "$ext_ip"
-	printf "\n#--- masternode ---\nmasternode=1\nmasternodeprivkey=$mn_key\nmasternodeblsprivkey=$mn_bls_key\n"
+	printf "\n#--- masternode ---\nmasternode=1\nmasternodeblsprivkey=$mn_bls_key\n"
 	printf "\n#--- new nodes ---\naddnode=118.69.72.95:18888\naddnode=80.211.81.251:18888\naddnode=88.198.119.136:18888\naddnode=46.97.97.38:18888\naddnode=62.121.77.173:18888\n"
 	printf "addnode=45.77.138.219:18888\naddnode=95.216.209.25:18888\naddnode=116.203.202.68:18888\naddnode=95.217.232.25:18888\naddnode=116.203.255.12:18888\naddnode=168.119.97.188:18888\n"
 	} > "$abs_conf_file"
