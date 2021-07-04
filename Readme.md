@@ -1,13 +1,11 @@
 # Absolute coin (ABS) masternode install script
 
-This script is used to install (or update) a vps masternode of Absolute coin (ABS).
+This script is used to install a vps masternode of Absolute coin (ABS) with ipv4 only.
+If you have a vps that has both, ipv4 and ipv6 enabled then look for multi node vps install script.
 
 The source of this script and documentation is ABS wiki on github found here:
 https://github.com/absolute-community/absolute/wiki
 
-First three parts of this how-to will cover installation of new ABS masternode.
-
-In part four and five we will cover the automatic and manual update of old masternodes.
 
 ## What you need
 
@@ -43,42 +41,17 @@ You need to wait for 15 confirmations (to be safe) before you can obtain transac
 
 	masternode outputs
 
-To connect your vps with the cold wallet you need a masternode private key which is obtained with this command run in debug console:
-
-	masternode genkey
-
-This key is needed for a while until the network is upgraded. In the future there will be another mechanism (bls private and public keys pair) to link masternode vps with the control wallet.
+To connect your vps with the cold wallet you need a bls masternode private key (bls private and public keys pair).
 
 To get the bls private key pair run this command in debug console:
 
 	bls generate
 
-You need to store these keys as they will be used later on the install script (masternode genkey and bls private key) and on protx cmd (bls public key).
-
-Now open the masternode configuration file from the control wallet (Tools > Open masternode configuration file) and configure the masternode using the example present in the file.
-
-You need the following information to create the masternode line, separated by one space:
-
-	- masternode alias
-	- vps ip and port
-	- masternode private key
-	- transaction id
-	- output index
-
-Example line:
-
-	MN1 207.246.76.60:18888 93HaYBVUCYjEMeeH1Y4sBGLALQZE1Yc1K64xiqgX37tGBDQL8Xg 2bcd3c84c84f87eaa86e4e56834c92927a07f9e18718810b92e0d0324456a67c 0
-
-Save this file and enable masternode tab in your ABS control wallet (Setting > Options > Wallet > Show mastenodes tab)
-
-Restart your Absolute wallet, the look for masternode alias just created above in masternode tab, select it from the list and click Start Alias button (before starting your node you should check that vps cold node is synced too).
-
+You need to store these keys as they will be used later on the install script (bls private key) and on protx cmd (bls public key).
 
 <br />
 
-<strong>Following section is needed after block 970000</strong>
-
-We will need two new addresses - owner address (must be new and unused) and voting address - run these 2 cmds in debug console: 
+From v13 wallet, we will need two new addresses - owner address (must be new and unused) and voting address - run these 2 cmds in debug console: 
 
 	getaccountaddress MN1-OWN
 	getaccountaddress MN1-VOT
@@ -106,7 +79,7 @@ I won't use it with this script, fees will be covered from the main wallet addre
 
 Use Putty to connect to your vps via ssh. Make sure you have at least Ubuntu Linux v18.04 installed.
 
-Have closed by the things prepared above: [masternode private key] and [bls private key], script will ask for them.
+Have closed by the things prepared above: [bls private key], script will ask for it.
 
 You need to be root, so, if you use a different user to login to your vps then switch the current user to root and navigate to /root folder with this shell command:
 
@@ -116,7 +89,7 @@ Download the install script with this command:
 
 	wget https://bit.ly/abs_vps_install -O abs_vps_install.sh && chmod +x abs_vps_install.sh
 
-Start the install script with the next command. You need to provide the masternode private key and bls private key generated earlier.
+Start the install script with the next command. You need to provide the bls private key generated earlier.
 
 	./abs_vps_install.sh
 
@@ -151,9 +124,6 @@ Note: you need to have vps cold node synced before you continue with the part 3!
 
 **3. On your control wallet**
 
-<strong><small>Note: This part is only needed after block 970000!</small></strong>
-
-<br />
 
 On your control wallet you need to run few commands to prepare, sign and sumbit a special ProRegTx transaction that will activate your masternode.
 
@@ -229,128 +199,8 @@ Result:
 	a12cbb3e286b53822e3c150ff1c8de2b6712e9dcbc29e9f54457440c245b7df5
 
 
-	
-
 Congratulations, your Absolute MasterNode is running! 
 
-<br />
-
-<br />
-
-**4. Automatic update your vps server**
-
-<strong><small>Note: For anyone that used this script to install a masternode in the past, i've added a new update script that will take care of the update process.</small></strong>
-
-Download the update script with this command:
-
-	wget https://bit.ly/abs_vps_update -O abs_vps_update.sh && chmod +x abs_vps_update.sh
-
-Script will request the bls private key and it will update the node.
-
-After update procedure has finished start your cold node with this command:
-
-	systemctl start absd
-
-<strong><small>Note: since there is also a protocol upgrade you need to start the masternode from your control wallet too.</small></strong>
-
-<br />
-
-<br />
-
-**5. Manual update your vps server**
-
-If you can't, for some reason, update your node with automatic update script above or you did not use my script to install your masternode, then you can use following procedure to manually update your masternode to latest binaries and confinguration.
-
-The following steps are needed to successfully update your masternode:
-	
-	- shutdown old daemon
-	- download new wallet version
-	- edit absolute.conf and add masternodeblsprivkey line
-	- update sentinel to the latest version
-	- start new daemon
-
-Let's take one at the time...
-
-<br />
-
-<strong><small>Step 1. Shutdown old daemon</small></strong>
-
-Use this command to stop the absoluted daemon:
-
-	absolute-cli stop
-
-You can check if daemon is not running anymore with the next command:
-
-	pidof absoluted
-
-There should be no output... If there is a number displayed then for some reason somenthig went wrong with the previous command and daemnon didn't shutdown.
-
-<br />
-
-<strong><small>Step 2. Download new wallet version</small></strong>
-
-Use next commands to update binaries:
-
-	cd /root
-	wget https://github.com/absolute-community/absolute/releases/download/v0.13.0.1/absolutecore-0.13.0-x86_64-linux-gnu.tar.gz
-	rm -r Absolute
-	tar -zxvf absolutecore-0.13.0-x86_64-linux-gnu.tar.gz && mv "absolutecore-0.13.0/bin" "/root/Absolute"
-	rm /usr/local/bin/absolute-cli
-	rm /usr/local/bin/absoluted
-	ln -s /root/Absolute/absolute-cli /usr/local/bin/absolute-cli
-	ln -s /root/Absolute/absoluted /usr/local/bin/absoluted
-
-You can check if binaries update was successful with next command:
-	
-	absolute-cli --version
-
-Result should be v0.13.0.1...
-
-<br />
-
-<strong><small>Step 3. Edit absolute.conf and add masternodeblsprivkey line</small></strong>
-
-Use next commands to edit configuration file:
-
-	nano /root/.absolutecore/absolute.conf
-
-Add a new line like the one below with the private key generated above without <>:
-	
-	masternodeblsprivkey=<the bls private key>
-
-Exit nano using CTRL+X confirming next two prompts when asking to save the file.
-
-<br />
-
-<strong><small>Step 4. Update sentinel to the latest version</small></strong>
-
-Use next commands to remove and install latest sentinel version:
-
-	cd /root/.absolutecore && rm -r sentinel
-	git clone https://github.com/absolute-community/sentinel.git && cd sentinel
-	virtualenv ./venv
-	./venv/bin/pip install -r requirements.txt
-
-You can check if sentinel is running with next command:
-
-	cd /root/.absolutecore/sentinel && SENTINEL_DEBUG=1 ./venv/bin/python bin/sentinel.py
-
-It should display records from sentinel database. If there is an error message, then you need to check node configuration.
-
-<br />
-
-<strong><small>Step 5. Start new daemon</small></strong>
-
-Use next command to start the new daemon:
-
-	/root/Absolute/absoluted -daemon
-
-You can check if daemon is running and masternode is started with the next commands:
-	
-	absolute-cli getinfo
-	absolute-cli masternode status
-
-Now you should have an up to date and functional masternode. Hopefully... :)
 
 <br />
 
